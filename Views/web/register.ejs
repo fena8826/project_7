@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - Admin Panel</title>
+    <style>
+        body {
+            font-family: system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans";
+            background: #edf4f3;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .register-box {
+            width: 100%;
+            max-width: 460px;
+            background: #fff;
+            border-radius: 20px;
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+        }
+
+        .heading {
+            background-color: #7460ee;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .heading h2 {
+            margin: 0;
+            font-size: 22px;
+            color: #fff;
+        }
+
+        .register-body {
+            padding: 30px 40px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 6px;
+            color: #333;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            font-size: 14px;
+            transition: border 0.3s;
+        }
+
+        .form-group input:focus {
+            border-color:#7460ee;
+            outline: none;
+        }
+
+        .btn {
+            width: 100%;
+            background: #7460ee;
+            color: white;
+            font-weight: 600;
+            padding: 12px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 15px;
+            transition: background 0.3s;
+        }
+
+        .btn:hover {
+            background: #7460ee;
+        }
+
+        .text-center {
+            text-align: center;
+            margin: 15px 0;
+            font-size: 16px;
+        }
+
+        .text-center a {
+            color: #7460ee;
+            text-decoration: none;
+        }
+
+        .text-center a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="register-box">
+        <div class="heading">
+            <h2>Create Account</h2>
+        </div>
+
+        <div class="register-body">
+        <form action="/web/register" method="POST">
+                <div class="form-group">
+                    <label for="fullname">Full Name</label>
+                    <input type="text" id="fullname" name="fullname" placeholder="Enter your full name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" placeholder="Enter your email" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" placeholder="Enter password" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="cpassword">Confirm Password</label>
+                    <input type="password" id="cpassword" name="cpassword" placeholder="Confirm password" required>
+                </div>
+
+                <button type="submit" class="btn">Register</button>
+            </form>
+
+            <div class="text-center">
+                <p>Already have an account? <a href="/web/login">Login here</a></p>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
