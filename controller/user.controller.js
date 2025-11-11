@@ -3,7 +3,7 @@ const bcrypt = require("bcrypt");
 const path = require("path");
 const fs = require("fs");
 
-// 🟢 Add User Page
+
 exports.addUserPage = async (req, res) => {
   try {
     return res.render("add_user");
@@ -13,7 +13,6 @@ exports.addUserPage = async (req, res) => {
   }
 };
 
-// 🟢 View All Users Page
 exports.viewAllUserPage = async (req, res) => {
   try {
     const users = await User.find();
@@ -24,7 +23,7 @@ exports.viewAllUserPage = async (req, res) => {
   }
 };
 
-// 🟢 Add New User (Admin)
+
 exports.addNewUser = async (req, res) => {
   try {
     let imagePath = "";
@@ -33,7 +32,7 @@ exports.addNewUser = async (req, res) => {
       req.body.image = imagePath;
     }
 
-    // Hash password before saving
+  
     const hashPassword = await bcrypt.hash(req.body.password, 10);
 
     const user = await User.create({
@@ -45,7 +44,7 @@ exports.addNewUser = async (req, res) => {
     if (user) {
       console.log("✅ Admin added successfully");
       req.flash("success", "Admin added successfully!");
-      // Redirect to View All Users page directly
+  
       return res.redirect("/user/view-users");
     } else {
       console.log("❌ Admin not added");
@@ -59,7 +58,6 @@ exports.addNewUser = async (req, res) => {
   }
 };
 
-// 🟢 Edit User Page
 exports.editUserPage = async (req, res) => {
   try {
     const user = await User.findById(req.params.id);
@@ -75,7 +73,7 @@ exports.editUserPage = async (req, res) => {
   }
 };
 
-// 🟢 Update User Details
+
 exports.updateUser = async (req, res) => {
   try {
     const user = await User.findById(req.params.id);
@@ -107,12 +105,12 @@ exports.updateUser = async (req, res) => {
   }
 };
 
-// 🟢 Delete User
+
 exports.deleteUser = async (req, res) => {
   try {
     const user = await User.findById(req.params.id);
     if (user) {
-      // Delete user's image from folder (if any)
+   
       if (user.image && user.image !== "") {
         const imgPath = path.join(__dirname, "..", user.image);
         try {

@@ -3,7 +3,6 @@ const otpgenerator = require("otp-generator");
 const bcrypt = require("bcrypt");
 const { sendEmail } = require("../middleware/sendEmail");
 
-// 🟢 Logout
 exports.logout = (req, res) => {
   try {
     req.session.destroy((err) => {
@@ -21,7 +20,7 @@ exports.logout = (req, res) => {
   }
 };
 
-// 🟢 Login Page
+
 exports.loginPage = (req, res) => {
   try {
     if (!req.isAuthenticated || !req.isAuthenticated()) {
@@ -35,7 +34,7 @@ exports.loginPage = (req, res) => {
   }
 };
 
-// 🟢 Login User
+
 exports.loginUser = async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -62,7 +61,7 @@ exports.loginUser = async (req, res) => {
   }
 };
 
-// 🟢 Dashboard
+
 exports.dashBoard = async (req, res) => {
   try {
     return res.render("dashboard");
@@ -72,7 +71,6 @@ exports.dashBoard = async (req, res) => {
   }
 };
 
-// 🟢 Profile Page
 exports.profilePage = async (req, res) => {
   try {
     const userId = req.cookies.user;
@@ -102,10 +100,9 @@ exports.profilePage = async (req, res) => {
 
 
 
-// 🟢 Change Password Page (✅ Fixed)
 exports.changePasswordPage = async (req, res) => {
   try {
-    // Passport automatically stores logged-in user in req.user
+
     const user = req.user;
 
     if (!user) {
@@ -113,7 +110,7 @@ exports.changePasswordPage = async (req, res) => {
       return res.redirect("/");
     }
 
-    // render page with user data
+
     return res.render("change_pass", { user, error: null, success: null });
   } catch (error) {
     console.error("Error rendering change password page:", error);
@@ -123,7 +120,7 @@ exports.changePasswordPage = async (req, res) => {
 };
 
 
-// 🟢 Change Password Logic (✅ Fixed)
+
 exports.changePassword = async (req, res) => {
   try {
     const { old_password, password, c_password } = req.body;
@@ -134,7 +131,7 @@ exports.changePassword = async (req, res) => {
       return res.redirect("/");
     }
 
-    // 1️⃣ Verify old password
+
     const isMatch = await bcrypt.compare(old_password, user.password);
     if (!isMatch) {
       return res.render("change_pass", {
@@ -144,7 +141,7 @@ exports.changePassword = async (req, res) => {
       });
     }
 
-    // 2️⃣ Check if new passwords match
+
     if (password !== c_password) {
       return res.render("change_pass", {
         user,
@@ -153,13 +150,13 @@ exports.changePassword = async (req, res) => {
       });
     }
 
-    // 3️⃣ Hash new password and update
+
     const salt = await bcrypt.genSalt(10);
     const hashPassword = await bcrypt.hash(password, salt);
 
     await User.findByIdAndUpdate(user._id, { password: hashPassword });
 
-    // 4️⃣ Logout user after password change
+
     req.logout((err) => {
       if (err) console.log(err);
       req.flash("success", "Password changed successfully! Please log in again.");
@@ -177,7 +174,7 @@ exports.changePassword = async (req, res) => {
 
 
 
-// 🟢 Forgot Password Page
+
 exports.forgotPasswordPage = async (req, res) => {
   try {
     return res.render("auth/forgotpassword");
@@ -187,7 +184,7 @@ exports.forgotPasswordPage = async (req, res) => {
   }
 };
 
-// 🟢 Simple Web Page
+
 exports.webpage = async (req, res) => {
   try {
     return res.render("webpages/blogs");
@@ -197,7 +194,7 @@ exports.webpage = async (req, res) => {
   }
 };
 
-// 🟢 Send Email with OTP
+
 exports.sendEmail = async (req, res) => {
   try {
     const user = await User.findOne({ email: req.body.email });
@@ -234,7 +231,7 @@ exports.sendEmail = async (req, res) => {
   }
 };
 
-// 🟢 Verify OTP
+
 exports.verifyOTP = async (req, res) => {
   try {
     const otp = req.cookies.otp;
@@ -251,7 +248,7 @@ exports.verifyOTP = async (req, res) => {
   }
 };
 
-// 🟢 Reset Password
+
 exports.resetPassword = async (req, res) => {
   try {
     const email = req.cookies.email;
@@ -277,7 +274,7 @@ exports.resetPassword = async (req, res) => {
   }
 };
 
-// 🟢 Authentication Middleware
+
 exports.setAuthenticated = (req, res, next) => {
   if (req.cookies && req.cookies.user) {
     next();
