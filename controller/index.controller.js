@@ -23,6 +23,7 @@ exports.logout = (req, res) => {
 
 exports.loginPage = (req, res) => {
   try {
+      req.flash('success', 'Login Success');
     if (!req.isAuthenticated || !req.isAuthenticated()) {
       return res.render("login");
     } else {
@@ -257,7 +258,8 @@ exports.resetPassword = async (req, res) => {
     if (!user) return res.redirect("/");
 
     if (req.body.newpassword !== req.body.cpassword) {
-      console.log("Passwords do not match");
+      console.log("pss match");
+        req.flash('success', 'Password updated successfully');
       return res.redirect("back");
     }
 
@@ -270,6 +272,7 @@ exports.resetPassword = async (req, res) => {
     return res.redirect("/");
   } catch (error) {
     console.log("Something went wrong in resetPassword:", error);
+    req.flash('error', 'Passwords do not match');
     return res.redirect("back");
   }
 };

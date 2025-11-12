@@ -8,7 +8,7 @@ exports.addBlogPage = async (req, res) => {
   try {
     const user = req.user;
     if (!user) return res.redirect("/user/login");
-
+req.flash("success", "🎉 Blog added successfully!");
     return res.render("add_blog", { user });
   } catch (error) {
     console.error("Error fetching user:", error);
@@ -101,6 +101,7 @@ exports.viewSingleBlog = async (req, res) => {
     return res.render("single-blog", { blog, user });
   } catch (error) {
     console.error("Error fetching single blog:", error);
+          req.flash("error", "❌ Blog not found!");
     return res.redirect("/blog/view-all-blogs");
   }
 };
@@ -110,7 +111,7 @@ exports.editBlogPage = async (req, res) => {
   try {
     const user = req.user;
     if (!user) return res.redirect("/user/login");
-
+ req.flash("error", "❌ Blog not found!");
     const blog = await Blog.findById(req.params.id);
 
     if (blog && blog.userId.toString() === user._id.toString()) {
@@ -133,10 +134,10 @@ exports.deleteBlog = async (req, res) => {
       await Blog.findByIdAndDelete(req.params.id);
       return res.redirect("back");
     } else {
-      return res.redirect("/login");
+     req.flash("error", "❌ Blog not found!");
     }
   } catch (error) {
-    console.error("Error deleting blog:", error);
+    req.flash("error", "❌ Something went wrong while deleting the blog!");
     return res.redirect("/blog/my-blogs");
   }
 };

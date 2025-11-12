@@ -38,24 +38,48 @@
     <script src="/assets/libs/flot/jquery.flot.crosshair.js"></script>
     <script src="/assets/libs/flot.tooltip/js/jquery.flot.tooltip.min.js"></script>
     <script src="/dist/js/pages/chart/chart-page-init.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
- <script>
-  <% if (typeof success !== 'undefined') { %>
-    Swal.fire({
-      title: "<%= success %>",
-      icon: "success",
-      draggable: true
-    });
-  <% } %>
 
-  <% if (typeof error !== 'undefined') { %>
-    Swal.fire({
-      title: "<%= error %>",
-      icon: "error",
-      draggable: true
-    });
-  <% } %>
+    <script src="
+https://cdn.jsdelivr.net/npm/sweetalert2@11.26.3/dist/sweetalert2.all.min.js
+"></script>
+<script>
+     <% if(locals.flash.success && locals.flash.success.length > 0) { %>
+        const Toast = Swal.mixin({
+            toast: true,
+            position: "top-end",
+            showConfirmButton: false,
+            timer: 2500,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.onmouseenter = Swal.stopTimer;
+                toast.onmouseleave = Swal.resumeTimer;
+            }
+            });
+            Toast.fire({
+            icon: "success",
+            title: "<%= locals.flash.success %>"
+            });
+    <% } %>  
+    
+    <% if(locals.flash.error && locals.flash.error.length > 0) { %>
+        const Toast = Swal.mixin({
+            toast: true,
+            position: "top-end",
+            showConfirmButton: false,
+            timer: 2500,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.onmouseenter = Swal.stopTimer;
+                toast.onmouseleave = Swal.resumeTimer;
+            }
+            });
+            Toast.fire({
+            icon: "error",
+            title: "<%= locals.flash.error %>"
+            });
+    <% } %>  
+    
 </script>
     
 
